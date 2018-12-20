@@ -8,6 +8,7 @@ def load_startup_modules():
     loaded_modules = []
 
     for module in modules:
+        log("info", "Loading module " + module)
         with open(modules_path + module + ".json") as f:
             module_data = json.load(f)
             if module_data["name"] != module:
@@ -20,20 +21,36 @@ def load_startup_modules():
                 log("warning", f"Error in loading module '{module}'. Could not find '{module}.py'.")
                 continue
             loaded_modules.append(module_data)
+            log("success", "Loaded module " + module)
     return loaded_modules
 
 def select_video():
     # TODO: Better video selection system
-    print("Welcome! To begin, please select a video.")
-    return input("Please enter video name>> ")
+    print("-=-Video Manager-=-\nAn extensible video modification system with plugin support, written by Ben Griffiths.\n\nWelcome! To begin, please select a video.\n")
+    with open("series_aliases.json") as f:
+        module_data = json.load(f)
+        video = log("input", "Please enter either full video filepath or an alias").lower()
+        log("info", "Looking up input in aliases file")
+        if video in module_data:
+            video = module_data[video]
+            log("success", "Found input in aliases file!")
+            video = video.replace("{series}", log("input", "Please enter season number"))
+            video = video.replace("{episode}", log("input", "Please enter episode number"))
+            # TODO: Check file exists
+            log("success", "Video path successfully formed.")
+            return video
+        else:
+            log("info", "Input not found in aliases. Assuming absolute path.")
+            # TODO: Check file exists
+            return video
+
+video = select_video()
 
 loaded_modules = load_startup_modules()
 menu_options = []
 for module in loaded_modules:
     menu_options.append(f"[{module['name'].capitalize()}] - {module['menu_listing']}")
 menu_options.append("Quit")
-
-video = select_video()
 
 @menu(menu_options)
 def choice_handler(choice):
