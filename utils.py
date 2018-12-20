@@ -9,3 +9,5 @@ def log(severity, message):
         print("[#] " + message)
     elif severity == "critical":
         print("[!!] " + message + ". Exiting.")
+    elif severity == "input":
+        return input("[?] " + message + ">> ")
