@@ -23,6 +23,7 @@ def load_startup_modules():
     return loaded_modules
 
 def select_video():
+    # TODO: Better video selection system
     print("Welcome! To begin, please select a video.")
     return input("Please enter video name>> ")
 
