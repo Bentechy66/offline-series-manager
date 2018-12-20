@@ -37,6 +37,13 @@ def main(video):
         log("warning", "No results found.")
         # TODO: Implement series and episode-based downloading
         return
+    subtitle_id = data[0]["IDSubtitleFile"]
+    log("info", "Attempting download of subtitles with ID " + str(subtitle_id))
+    if isinstance(ost.download_subtitles([subtitle_id], override_filenames={subtitle_id: video + '.srt'}, output_directory=video_path, extension='srt'), dict):
+        log("success", "Subtitles successfully downloaded. Enjoy your video!")
+    else:
+        log("critical", "Subtitle download failed.")
+        return
 
 
 
