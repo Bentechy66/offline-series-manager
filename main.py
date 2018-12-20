@@ -22,11 +22,17 @@ def load_startup_modules():
             loaded_modules.append(module_data)
     return loaded_modules
 
+def select_video():
+    print("Welcome! To begin, please select a video.")
+    return input("Please enter video name>> ")
+
 loaded_modules = load_startup_modules()
 menu_options = []
 for module in loaded_modules:
     menu_options.append(f"[{module['name'].capitalize()}] - {module['menu_listing']}")
 menu_options.append("Quit")
+
+video = select_video()
 
 @menu(menu_options)
 def choice_handler(choice):
@@ -35,7 +41,7 @@ def choice_handler(choice):
         import_string = "import modules." + module_name
         # TODO: Escape strings, probably not a problem since filenames but something to consider
         exec(import_string)
-        exec("modules." + module_name + ".main()")
+        exec("modules." + module_name + ".main(video)")
 
 # Calling the choice handler will also print the menu
 choice_handler()
