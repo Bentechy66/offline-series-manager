@@ -1,0 +1,7 @@
+*.mp4
+*.mkv
+
+config.py
+
+*.pyc
+__pycache__
