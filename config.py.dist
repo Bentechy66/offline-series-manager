@@ -1,0 +1,6 @@
+video_path = "videos/"
+modules_path = "modules/"
+opensubtitles_password = "password"
+opensubtitles_username = "username"
+
+modules = ['modulename']
